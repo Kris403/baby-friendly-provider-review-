@@ -3,412 +3,531 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Baby-Friendly Provider Review Flashcards</title>
 
 <style>
 :root{
-  --primary:#6a1b9a;
-  --secondary:#8e24aa;
-  --accent:#ff9800;
-  --bg:#f5f7fb;
-  --card:#ffffff;
-  --text:#222;
+    --primary:#6a1b9a;
+    --secondary:#8e24aa;
+    --accent:#ff9800;
+    --light:#faf7fc;
+    --dark:#222;
+    --success:#2e7d32;
+    --shadow:0 10px 30px rgba(0,0,0,.15);
+    --radius:20px;
 }
 
 *{
-  box-sizing:border-box;
-  margi*:0;
-  padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 body{
-  font-f*mily:Segoe UI,Tahoma,sans-serif;
- *background:var(--bg);
-  min-height*100vh;
-  padding:20px;
-}
-
-.contain*r{
-  max-width:1000px;
-  margin:au*o;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background:linear-gradient(135deg,#f7f0fb,#eef7ff);
+    min-height:100vh;
+    color:var(--dark);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:20px;
 }
 
 header{
-  text-align:center;*  margin-bottom:20px;
+    text-align:center;
+    max-width:900px;
+    margin-bottom:20px;
 }
 
 h1{
-  col*r:var(--primary);
+    color:var(--primary);
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#555;
+    line-height:1.5;
+}
+
+.container{
+    width:100%;
+    max-width:900px;
 }
 
 .dashboard{
- *background:white;
-  padding:16px;
-* border-radius:16px;
-  margin-bott*m:20px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    background:white;
+    padding:16px;
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    margin-bottom:20px;
+}
+
+.progress-wrapper{
+    flex:1;
+    min-width:220px;
 }
 
 .progress-bar{
-  height*12px;
-  background:#ddd;
-  border-*adius:20px;
-  overflow:hidden;
+    width:100%;
+    height:12px;
+    background:#e9e9e9;
+    border-radius:20px;
+    overflow:hidden;
 }
 
-*progress{
-  height:100%;
-  width:0*;
-  background:linear-gradient(90d*g,var(--secondary),var(--accent));*}
+.progress{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--secondary),var(--accent));
+    transition:.3s;
+}
 
 .stats{
-  margin-top:10px;
+    font-weight:600;
+    color:var(--primary);
 }
 
-.*lashcard{
-  width:100%;
-  height:4*0px;
-  perspective:1200px;
+.flashcard-area{
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-.car*-inner{
-  width:100%;
-  height:100*;
-  position:relative;
-  transform*style:preserve-3d;
-  transition:tr*nsform .7s;
+.flashcard{
+    width:100%;
+    max-width:780px;
+    height:450px;
+    perspective:1500px;
 }
 
-.flashcard.flipped *card-inner{
-  transform:rotateY(18*deg);
+.card-inner{
+    width:100%;
+    height:100%;
+    position:relative;
+    transition:transform .7s;
+    transform-style:preserve-3d;
+}
+
+.flashcard.flipped .card-inner{
+    transform:rotateY(180deg);
 }
 
 .card-face{
-  position:ab*olute;
-  width:100%;
-  height:100%*
-  backface-visibility:hidden;
-  b*ckground:white;
-  padding:30px;
-  *order-radius:20px;
-  box-shadow:0 *0px 30px rgba(0,0,0,.1);
+    position:absolute;
+    width:100%;
+    height:100%;
+    backface-visibility:hidden;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    background:white;
+    display:flex;
+    flex-direction:column;
+    padding:32px;
 }
 
-.card-*ront{
-  display:flex;
-  flex-direc*ion:column;
-  justify-content:cent*r;
-  align-items:center;
+.card-front{
+    justify-content:center;
+    align-items:center;
+    text-align:center;
 }
 
-.card-*ack{
-  transform:rotateY(180deg);
-*
+.card-back{
+    transform:rotateY(180deg);
+    overflow-y:auto;
+}
 
 .badge{
-  background:var(--secon*ary);
-  color:white;
-  padding:6px*12px;
-  border-radius:20px;
-  marg*n-bottom:20px;
+    background:var(--secondary);
+    color:white;
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:.85rem;
+    margin-bottom:20px;
 }
 
 .question{
-  fon*-size:2rem;
-  text-align:center;
-}*
+    font-size:2rem;
+    font-weight:700;
+    color:var(--primary);
+}
+
+.answer-title{
+    color:var(--primary);
+    margin-bottom:12px;
+}
+
 .answer{
-  line-height:1.8;
-  mar*in-top:15px;
+    font-size:1.1rem;
+    line-height:1.7;
 }
 
 .controls{
-  displ*y:flex;
-  gap:10px;
-  justify-cont*nt:center;
-  flex-wrap:wrap;
-  mar*in-top:20px;
+    margin-top:20px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
 }
 
 button{
-  border:n*ne;
-  background:var(--primary);
- *color:white;
-  padding:12px 18px;
-* border-radius:10px;
-  cursor:poin*er;
+    border:none;
+    padding:12px 18px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.2s;
+    background:var(--primary);
+    color:white;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+button:focus{
+    outline:3px solid var(--accent);
+    outline-offset:2px;
+}
+
+.secondary{
+    background:#4a5568;
+}
+
+.success{
+    background:var(--success);
+}
+
+.flip-btn{
+    background:var(--accent);
+}
+
+.instructions{
+    margin-top:20px;
+    text-align:center;
+    color:#666;
+    font-size:.95rem;
+}
+
+.sr-only{
+    position:absolute;
+    left:-10000px;
+}
+
+footer{
+    margin-top:24px;
+    font-size:.85rem;
+    color:#666;
+    text-align:center;
+}
+
+@media (max-width:768px){
+
+.flashcard{
+    height:520px;
+}
+
+.question{
+    font-size:1.5rem;
+}
+
+.answer{
+    font-size:1rem;
+}
+}
+
+@media (prefers-reduced-motion: reduce){
+    .card-inner,
+    button,
+    .progress{
+        transition:none;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<d*v class="container">
-
 <header>
-<h1*Baby-Friendly Provider Review Flas*cards</h1>
-<p>Prisma Health Provid*r Competency Review</p>
+<h1>Baby-Friendly Provider Review Flashcards</h1>
+<p class="subtitle">
+Provider competency review based on Baby-Friendly USA GEC 6th Edition concepts,
+Prisma Health infant feeding practices, supplementation guidance, rooming-in,
+cue-based feeding, safe sleep, and discharge planning.
+</p>
 </header>
-*<div class="dashboard">
 
-<div clas*="progress-bar">
-<div class="progr*ss" id="progress"></div>
+<div class="container">
+
+<div class="dashboard">
+    <div class="progress-wrapper">
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+    </div>
+
+    <div class="stats" id="stats">
+        Card 1 of 27
+    </div>
 </div>
 
-<*iv class="stats" id="stats">
-Card *
+<div class="flashcard-area">
+
+<div class="flashcard" id="flashcard">
+<div class="card-inner">
+
+<div class="card-face card-front">
+    <span class="badge" id="category"></span>
+    <div class="question" id="question"></div>
+</div>
+
+<div class="card-face card-back">
+    <h2 class="answer-title">Answer</h2>
+    <div class="answer" id="answer"></div>
 </div>
 
 </div>
-
-<div class="flash*ard" id="flashcard">
-
-<div class="*ard-inner">
-
-<div class="card-face*card-front">
-<div class="badge" id*"category"></div>
-<div class="ques*ion" id="question"></div>
-</div>
-
-*div class="card-face card-back">
-<*2>Answer</h2>
-<div class="answer" *d="answer"></div>
 </div>
 
 </div>
-<*div>
 
 <div class="controls">
+    <button class="secondary" id="prevBtn">◀ Previous</button>
+    <button class="flip-btn" id="flipBtn">Flip Card</button>
+    <button class="secondary" id="nextBtn">Next ▶</button>
+    <button class="success" id="shuffleBtn">Shuffle</button>
+    <button id="restartBtn">Restart</button>
+</div>
 
-<but*on id="prevBtn">Previous</button>
-*button id="flipBtn">Flip</button>
-*button id="nextBtn">Next</button>
-*button id="shuffleBtn">Shuffle</bu*ton>
-<button id="restartBtn">Restart</button>
+<div class="instructions">
+Click the card or use the Flip button. Keyboard shortcuts:
+<b>Space</b>=Flip, <b>←</b>=Previous, <b>→</b>=Next
+</div>
+
+<div id="liveRegion" class="sr-only" aria-live="polite"></div>
+
+<footer>
+Educational review tool for staff education. Not intended as individualized medical advice.
+</footer>
 
 </div>
 
 <script>
 
-const cards = [{
+const cards = [
+
+{
 category:"Step 1",
 question:"How does Prisma Health meet Baby-Friendly Code compliance requirements?",
-answer:"Formula, bottles, nipples and pacifiers are purchased at fair market value. Marketing materials, gifts, samples, coupons and manufacturer contact with mothers are prohibited."
+answer:"Formula, bottles, nipples, and pacifiers are purchased at fair market value. Marketing materials, samples, coupons, industry gifts, promotional items, and direct manufacturer contact with mothers and families are prohibited."
 },
 
 {
 category:"Step 1",
 question:"What education materials are allowed under Baby-Friendly standards?",
-answer:"Educational materials must be free of formula advertising, manufacturer logos and promotional messaging."
+answer:"Patient education materials must be free of formula advertising, branding, company logos, promotional messaging, and marketing content."
 },
 
 {
-category:"Communication Skills",
-question:"What listening skills should providers demonstrate when talking with mothers?",
-answer:"Use open-ended questions, attentive listening, reflection, clarification and avoidance of judgment."
+category:"Step 2",
+question:"What is required regarding staff breastfeeding competency?",
+answer:"Staff must demonstrate breastfeeding competencies, maintain ongoing education, complete competency validation, and remain current with Baby-Friendly breastfeeding support requirements."
 },
 
 {
-category:"Communication Skills",
-question:"How should providers adapt communication style and content?",
-answer:"Use plain language, culturally responsive communication, appropriate pacing and individualized counseling."
+category:"Step 3",
+question:"What key prenatal education topics should be discussed?",
+answer:"Benefits of breastfeeding, exclusive breastfeeding, skin-to-skin care, rooming-in, cue-based feeding, milk supply, positioning and latch, feeding frequency, and community support resources."
 },
 
 {
-category:"Communication Skills",
-question:"How can providers encourage mothers to share their views?",
-answer:"Invite preferences and goals, check understanding, ask about concerns and incorporate the mother's perspective."
-},
-
-{
-category:"Communication Skills",
-question:"How can providers build confidence and provide support?",
-answer:"Acknowledge strengths, provide practical assistance, avoid blame and support informed decision-making."
-},
-
-{
-category:"Prenatal Education",
+category:"Step 3",
 question:"When should breastfeeding education begin?",
 answer:"During the first trimester whenever possible and continue throughout prenatal care."
 },
 
 {
-category:"Prenatal Education",
-question:"What breastfeeding topics should be discussed prenatally?",
-answer:"Benefits of breastfeeding, exclusive breastfeeding, skin-to-skin care, rooming-in, cue-based feeding, latch, positioning and community resources."
-},
-
-{
-category:"Skin-to-Skin",
+category:"Step 4",
 question:"How soon should healthy newborns be placed skin-to-skin?",
-answer:"Immediately after birth unless medically contraindicated."
+answer:"Immediately after birth regardless of feeding intention unless medically contraindicated."
 },
 
 {
-category:"Skin-to-Skin",
+category:"Step 4",
 question:"How long should initial skin-to-skin continue?",
 answer:"At least one uninterrupted hour and through the first feeding whenever possible."
-},{
-category:"Skin-to-Skin",
-question:"Why is immediate uninterrupted skin-to-skin important for the infant?",
-answer:"Supports thermoregulation, physiologic stability, feeding readiness, transition to extrauterine life and bonding."
 },
 
 {
-category:"Skin-to-Skin",
-question:"Why is immediate uninterrupted skin-to-skin important for the mother?",
-answer:"Supports bonding, confidence, breastfeeding success and maternal recovery."
+category:"Step 4",
+question:"Which procedures should be delayed during initial skin-to-skin?",
+answer:"Weights, measurements, Vitamin K administration, eye prophylaxis, and Hepatitis B vaccine when clinically appropriate until after first feeding or skin-to-skin period."
 },
 
 {
-category:"Breastfeeding Support",
+category:"Step 5",
 question:"When should milk expression begin if mother and infant are separated?",
-answer:"Preferably within 1–2 hours after birth and no later than 6 hours postpartum."
+answer:"Preferably within 1–2 hours after birth and no later than 6 hours postpartum. Expression should begin as soon as possible after delivery and completion of initial skin-to-skin when safe and medically feasible."
 },
 
 {
-category:"Breastfeeding Support",
+category:"Step 5",
 question:"How often should separated mothers express milk?",
-answer:"Eight to twelve times every 24 hours."
+answer:"Approximately 8–12 times every 24 hours to establish and maintain milk supply."
 },
 
 {
-category:"Breastfeeding Support",
+category:"Step 5",
 question:"What breastfeeding assessment tool is required?",
-answer:"LATCH assessment with documentation of positioning, latch, milk transfer, output, weight and jaundice."
+answer:"LATCH assessment with documentation of positioning, latch, milk transfer, output, feeding frequency, weight trends, and jaundice assessment."
 },
 
 {
-category:"Supplementation",
+category:"Step 6",
 question:"What is the Baby-Friendly standard for supplementation?",
-answer:"Only breast milk unless there is a documented medical indication or informed maternal decision."
+answer:"Breastfed infants should receive only breast milk unless there is a documented medical indication or an informed maternal decision."
 },
 
 {
-category:"Supplementation",
+category:"Step 6",
 question:"What is the preferred supplementation hierarchy?",
-answer:"Mother's own milk, donor milk, ready-to-feed formula, then prepared formula."
+answer:"Mother's own milk → donor human milk → ready-to-feed formula → prepared formula."
+},
+
+{
+category:"Step 6",
+question:"Must supplementation be ordered and documented?",
+answer:"Yes. Medical indication, education provided, reason for supplementation, and feeding plan should be documented in the medical record."
 },
 
 {
 category:"Supplementation",
-question:"When is supplementation medically indicated?",
-answer:"Examples include hypoglycemia, excessive weight loss, poor intake, hyperbilirubinemia and maternal factors affecting feeding."
-},{
-category:"Rooming-In",
+question:"Name common infant indications for supplementation.",
+answer:"Hypoglycemia, hyperbilirubinemia requiring phototherapy, poor intake, absent voids or stools, excessive weight loss, or poor milk transfer despite skilled intervention."
+},
+
+{
+category:"Supplementation",
+question:"When does weight loss become a supplementation concern?",
+answer:"Weight loss at or above the 95th percentile on NEWT. Supplementation discussions may begin around the 75th percentile."
+},
+
+{
+category:"Supplementation",
+question:"Name common maternal factors supporting supplementation consideration.",
+answer:"Hypothyroidism, PCOS, breast surgery, breast anatomy concerns, severe feeding pain despite intervention, low milk production risk factors, or unavoidable maternal-infant separation."
+},
+
+{
+category:"Step 7",
 question:"What is Baby-Friendly rooming-in?",
-answer:"Mother and infant remain together 24 hours per day unless separation is medically indicated."
+answer:"Mother and infant remain together 24 hours per day unless medical, safety, or maternal concerns require separation."
 },
 
 {
-category:"Rooming-In",
+category:"Step 7",
 question:"Why is rooming-in important?",
-answer:"Supports cue recognition, responsive feeding, bonding and breastfeeding success."
+answer:"It promotes feeding cue recognition, frequent feeding, breastfeeding exclusivity, and maternal confidence."
 },
 
 {
-category:"Cue-Based Feeding",
+category:"Step 8",
 question:"What feeding approach does Baby-Friendly support?",
-answer:"Infant-led cue-based feeding with no restriction on feeding frequency or duration."
+answer:"Infant-led, cue-based feeding with no restriction on feeding frequency or duration."
 },
 
 {
-category:"Cue-Based Feeding",
-question:"Name two early feeding cues.",
-answer:"Rooting, hand-to-mouth activity, stirring, increased alertness or mouth opening."
+category:"Step 8",
+question:"How often should healthy breastfed newborns feed?",
+answer:"Typically 8–12 feedings every 24 hours after the first day of life."
 },
 
 {
-category:"Cue-Based Feeding",
-question:"What is a late feeding cue?",
-answer:"Crying."
-},
-
-{
-category:"Cue-Based Feeding",
-question:"How often should healthy breastfed infants feed?",
-answer:"Usually eight to twelve feedings every twenty-four hours."
-},
-
-{
-category:"Pacifiers",
+category:"Step 9",
 question:"What is the recommendation regarding pacifier use?",
-answer:"Avoid routine pacifier use until breastfeeding is well established while considering current safe sleep recommendations."
-},{
+answer:"Avoid routine pacifier use in breastfeeding infants until breastfeeding is well established. Families should receive education regarding risks and alternatives."
+},
+
+{
+category:"Step 9",
+question:"What feeding methods are preferred when supplementation is necessary?",
+answer:"Cup feeding, spoon feeding, finger feeding, or supplemental nursing systems when feasible."
+},
+
+{
+category:"Step 10",
+question:"What discharge support is required?",
+answer:"Formal breastfeeding evaluation, feeding plan when indicated, lactation resources, community referrals, and follow-up recommendations."
+},
+
+{
+category:"Step 10",
+question:"What should occur if an infant is not feeding well at discharge?",
+answer:"An individualized written feeding plan and close post-discharge follow-up should be arranged."
+},
+
+{
 category:"Safe Sleep",
 question:"What safe sleep practice should be modeled in the hospital?",
-answer:"ABCs of Safe Sleep: Alone, on the Back and in a Crib or Bassinet."
+answer:"ABCs of Safe Sleep: Alone, on the Back, in a Crib or Bassinet."
 },
 
 {
 category:"Safe Sleep",
-question:"How should skin-to-skin be performed safely?",
-answer:"Infant face visible, airway clear, caregiver awake and infant monitored."
+question:"How should skin-to-skin be conducted safely?",
+answer:"Infant’s face must remain visible, airway clear, head positioned appropriately, caregiver awake and alert, and infant returned to a bassinet when caregiver becomes sleepy."
 },
 
 {
 category:"Safe Sleep",
-question:"Why is fatigue education important?",
-answer:"Fatigue increases risk of falls, bed-sharing, suffocation and unsafe sleep events."
-},
-
-{
-category:"Discharge Planning",
-question:"What discharge support is required?",
-answer:"Formal breastfeeding evaluation, feeding plan, community referrals, lactation resources and follow-up recommendations."
-},
-
-{
-category:"Discharge Planning",
-question:"What should occur if an infant is not feeding well at discharge?",
-answer:"An individualized written feeding plan and close follow-up should be arranged."
+question:"Why is fatigue education important during rooming-in?",
+answer:"Maternal exhaustion increases the risk of falls, bed-sharing, suffocation, and unsafe sleep events."
 }
 
-];let current = 0;
+];
 
-const question =
-document.getElementById("question");
+let current = 0;
+let shuffledCards = [...cards];
 
-const answer =
-document.getElementById("answer");
-
-const category =
-document.getElementById("category");
-
-const progress =
-document.getElementById("progress");
-
-const stats =
-document.getElementById("stats");
-
-const flashcard =
-document.getElementById("flashcard");
+const flashcard = document.getElementById('flashcard');
+const question = document.getElementById('question');
+const answer = document.getElementById('answer');
+const category = document.getElementById('category');
+const stats = document.getElementById('stats');
+const progress = document.getElementById('progress');
+const liveRegion = document.getElementById('liveRegion');
 
 function renderCard(){
 
-const card =
-cards[current];
+const card = shuffledCards[current];
 
-question.textContent =
-card.question;
+question.textContent = card.question;
+answer.textContent = card.answer;
+category.textContent = card.category;
 
-answer.textContent =
-card.answer;
-
-category.textContent =
-card.category;
-
-stats.textContent =
-`Card ${current+1} of ${cards.length}`;
+stats.textContent = `Card ${current+1} of ${shuffledCards.length}`;
 
 progress.style.width =
-`${((current+1)/cards.length)*100}%`;
+`${((current+1)/shuffledCards.length)*100}%`;
 
-flashcard.classList.remove("flipped");
+flashcard.classList.remove('flipped');
+
+liveRegion.textContent =
+`Showing card ${current+1} of ${shuffledCards.length}`;
+}
+
+function flipCard(){
+flashcard.classList.toggle('flipped');
 }
 
 function nextCard(){
-if(current < cards.length-1){
+if(current < shuffledCards.length-1){
 current++;
 renderCard();
 }
@@ -421,53 +540,42 @@ renderCard();
 }
 }
 
-function flipCard(){
-flashcard.classList.toggle("flipped");
-}
-
 function shuffleCards(){
 
-for(let i=cards.length-1;i>0;i--){
-
-const j =
-Math.floor(Math.random()*(i+1));
-
-[cards[i],cards[j]] =
-[cards[j],cards[i]];
+for(let i = shuffledCards.length-1; i>0; i--){
+const j = Math.floor(Math.random()*(i+1));
+[shuffledCards[i], shuffledCards[j]] =
+[shuffledCards[j], shuffledCards[i]];
 }
 
-current=0;
-
+current = 0;
 renderCard();
 }
 
 function restartCards(){
-
-current=0;
-
+shuffledCards = [...cards];
+current = 0;
 renderCard();
 }
 
-document.getElementById("nextBtn")
-.addEventListener("click",nextCard);
+document.getElementById('flipBtn')
+.addEventListener('click',flipCard);
 
-document.getElementById("prevBtn")
-.addEventListener("click",prevCard);
+document.getElementById('nextBtn')
+.addEventListener('click',nextCard);
 
-document.getElementById("flipBtn")
-.addEventListener("click",flipCard);
+document.getElementById('prevBtn')
+.addEventListener('click',prevCard);
 
-document.getElementById("shuffleBtn")
-.addEventListener("click",shuffleCards);
+document.getElementById('shuffleBtn')
+.addEventListener('click',shuffleCards);
 
-document.getElementById("restartBtn")
-.addEventListener("click",restartCards);
+document.getElementById('restartBtn')
+.addEventListener('click',restartCards);
 
-flashcard.addEventListener("click",flipCard);
+flashcard.addEventListener('click',flipCard);
 
-document.addEventListener(
-"keydown",
-e=>{
+document.addEventListener('keydown',e=>{
 
 if(e.code==="Space"){
 e.preventDefault();
@@ -481,6 +589,7 @@ nextCard();
 if(e.key==="ArrowLeft"){
 prevCard();
 }
+
 });
 
 renderCard();
@@ -489,4 +598,3 @@ renderCard();
 
 </body>
 </html>
-Add Baby-Friendly Provider Review flashcards
