@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Baby-Friendly Provider Review Flashcards</title>
+
+<style>
+:root{
+  --primary:#6a1b9a;
+  --secondary:#8e24aa;
+  --accent:#ff9800;
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --text:#222;
+}
+
+*{
+  box-sizing:border-box;
+  margi*:0;
+  padding:0;
+}
+
+body{
+  font-f*mily:Segoe UI,Tahoma,sans-serif;
+ *background:var(--bg);
+  min-height*100vh;
+  padding:20px;
+}
+
+.contain*r{
+  max-width:1000px;
+  margin:au*o;
+}
+
+header{
+  text-align:center;*  margin-bottom:20px;
+}
+
+h1{
+  col*r:var(--primary);
+}
+
+.dashboard{
+ *background:white;
+  padding:16px;
+* border-radius:16px;
+  margin-bott*m:20px;
+}
+
+.progress-bar{
+  height*12px;
+  background:#ddd;
+  border-*adius:20px;
+  overflow:hidden;
+}
+
+*progress{
+  height:100%;
+  width:0*;
+  background:linear-gradient(90d*g,var(--secondary),var(--accent));*}
+
+.stats{
+  margin-top:10px;
+}
+
+.*lashcard{
+  width:100%;
+  height:4*0px;
+  perspective:1200px;
+}
+
+.car*-inner{
+  width:100%;
+  height:100*;
+  position:relative;
+  transform*style:preserve-3d;
+  transition:tr*nsform .7s;
+}
+
+.flashcard.flipped *card-inner{
+  transform:rotateY(18*deg);
+}
+
+.card-face{
+  position:ab*olute;
+  width:100%;
+  height:100%*
+  backface-visibility:hidden;
+  b*ckground:white;
+  padding:30px;
+  *order-radius:20px;
+  box-shadow:0 *0px 30px rgba(0,0,0,.1);
+}
+
+.card-*ront{
+  display:flex;
+  flex-direc*ion:column;
+  justify-content:cent*r;
+  align-items:center;
+}
+
+.card-*ack{
+  transform:rotateY(180deg);
+*
+
+.badge{
+  background:var(--secon*ary);
+  color:white;
+  padding:6px*12px;
+  border-radius:20px;
+  marg*n-bottom:20px;
+}
+
+.question{
+  fon*-size:2rem;
+  text-align:center;
+}*
+.answer{
+  line-height:1.8;
+  mar*in-top:15px;
+}
+
+.controls{
+  displ*y:flex;
+  gap:10px;
+  justify-cont*nt:center;
+  flex-wrap:wrap;
+  mar*in-top:20px;
+}
+
+button{
+  border:n*ne;
+  background:var(--primary);
+ *color:white;
+  padding:12px 18px;
+* border-radius:10px;
+  cursor:poin*er;
+}
+</style>
+</head>
+
+<body>
+
+<d*v class="container">
+
+<header>
+<h1*Baby-Friendly Provider Review Flas*cards</h1>
+<p>Prisma Health Provid*r Competency Review</p>
+</header>
+*<div class="dashboard">
+
+<div clas*="progress-bar">
+<div class="progr*ss" id="progress"></div>
+</div>
+
+<*iv class="stats" id="stats">
+Card *
+</div>
+
+</div>
+
+<div class="flash*ard" id="flashcard">
+
+<div class="*ard-inner">
+
+<div class="card-face*card-front">
+<div class="badge" id*"category"></div>
+<div class="ques*ion" id="question"></div>
+</div>
+
+*div class="card-face card-back">
+<*2>Answer</h2>
+<div class="answer" *d="answer"></div>
+</div>
+
+</div>
+<*div>
+
+<div class="controls">
+
+<but*on id="prevBtn">Previous</button>
+*button id="flipBtn">Flip</button>
+*button id="nextBtn">Next</button>
+*button id="shuffleBtn">Shuffle</bu*ton>
+<button id="restartBtn">Restart</button>
+
+</div>
+
+<script>
+
+const cards = [{
+category:"Step 1",
+question:"How does Prisma Health meet Baby-Friendly Code compliance requirements?",
+answer:"Formula, bottles, nipples and pacifiers are purchased at fair market value. Marketing materials, gifts, samples, coupons and manufacturer contact with mothers are prohibited."
+},
+
+{
+category:"Step 1",
+question:"What education materials are allowed under Baby-Friendly standards?",
+answer:"Educational materials must be free of formula advertising, manufacturer logos and promotional messaging."
+},
+
+{
+category:"Communication Skills",
+question:"What listening skills should providers demonstrate when talking with mothers?",
+answer:"Use open-ended questions, attentive listening, reflection, clarification and avoidance of judgment."
+},
+
+{
+category:"Communication Skills",
+question:"How should providers adapt communication style and content?",
+answer:"Use plain language, culturally responsive communication, appropriate pacing and individualized counseling."
+},
+
+{
+category:"Communication Skills",
+question:"How can providers encourage mothers to share their views?",
+answer:"Invite preferences and goals, check understanding, ask about concerns and incorporate the mother's perspective."
+},
+
+{
+category:"Communication Skills",
+question:"How can providers build confidence and provide support?",
+answer:"Acknowledge strengths, provide practical assistance, avoid blame and support informed decision-making."
+},
+
+{
+category:"Prenatal Education",
+question:"When should breastfeeding education begin?",
+answer:"During the first trimester whenever possible and continue throughout prenatal care."
+},
+
+{
+category:"Prenatal Education",
+question:"What breastfeeding topics should be discussed prenatally?",
+answer:"Benefits of breastfeeding, exclusive breastfeeding, skin-to-skin care, rooming-in, cue-based feeding, latch, positioning and community resources."
+},
+
+{
+category:"Skin-to-Skin",
+question:"How soon should healthy newborns be placed skin-to-skin?",
+answer:"Immediately after birth unless medically contraindicated."
+},
+
+{
+category:"Skin-to-Skin",
+question:"How long should initial skin-to-skin continue?",
+answer:"At least one uninterrupted hour and through the first feeding whenever possible."
+},{
+category:"Skin-to-Skin",
+question:"Why is immediate uninterrupted skin-to-skin important for the infant?",
+answer:"Supports thermoregulation, physiologic stability, feeding readiness, transition to extrauterine life and bonding."
+},
+
+{
+category:"Skin-to-Skin",
+question:"Why is immediate uninterrupted skin-to-skin important for the mother?",
+answer:"Supports bonding, confidence, breastfeeding success and maternal recovery."
+},
+
+{
+category:"Breastfeeding Support",
+question:"When should milk expression begin if mother and infant are separated?",
+answer:"Preferably within 1–2 hours after birth and no later than 6 hours postpartum."
+},
+
+{
+category:"Breastfeeding Support",
+question:"How often should separated mothers express milk?",
+answer:"Eight to twelve times every 24 hours."
+},
+
+{
+category:"Breastfeeding Support",
+question:"What breastfeeding assessment tool is required?",
+answer:"LATCH assessment with documentation of positioning, latch, milk transfer, output, weight and jaundice."
+},
+
+{
+category:"Supplementation",
+question:"What is the Baby-Friendly standard for supplementation?",
+answer:"Only breast milk unless there is a documented medical indication or informed maternal decision."
+},
+
+{
+category:"Supplementation",
+question:"What is the preferred supplementation hierarchy?",
+answer:"Mother's own milk, donor milk, ready-to-feed formula, then prepared formula."
+},
+
+{
+category:"Supplementation",
+question:"When is supplementation medically indicated?",
+answer:"Examples include hypoglycemia, excessive weight loss, poor intake, hyperbilirubinemia and maternal factors affecting feeding."
+},{
+category:"Rooming-In",
+question:"What is Baby-Friendly rooming-in?",
+answer:"Mother and infant remain together 24 hours per day unless separation is medically indicated."
+},
+
+{
+category:"Rooming-In",
+question:"Why is rooming-in important?",
+answer:"Supports cue recognition, responsive feeding, bonding and breastfeeding success."
+},
+
+{
+category:"Cue-Based Feeding",
+question:"What feeding approach does Baby-Friendly support?",
+answer:"Infant-led cue-based feeding with no restriction on feeding frequency or duration."
+},
+
+{
+category:"Cue-Based Feeding",
+question:"Name two early feeding cues.",
+answer:"Rooting, hand-to-mouth activity, stirring, increased alertness or mouth opening."
+},
+
+{
+category:"Cue-Based Feeding",
+question:"What is a late feeding cue?",
+answer:"Crying."
+},
+
+{
+category:"Cue-Based Feeding",
+question:"How often should healthy breastfed infants feed?",
+answer:"Usually eight to twelve feedings every twenty-four hours."
+},
+
+{
+category:"Pacifiers",
+question:"What is the recommendation regarding pacifier use?",
+answer:"Avoid routine pacifier use until breastfeeding is well established while considering current safe sleep recommendations."
+},{
+category:"Safe Sleep",
+question:"What safe sleep practice should be modeled in the hospital?",
+answer:"ABCs of Safe Sleep: Alone, on the Back and in a Crib or Bassinet."
+},
+
+{
+category:"Safe Sleep",
+question:"How should skin-to-skin be performed safely?",
+answer:"Infant face visible, airway clear, caregiver awake and infant monitored."
+},
+
+{
+category:"Safe Sleep",
+question:"Why is fatigue education important?",
+answer:"Fatigue increases risk of falls, bed-sharing, suffocation and unsafe sleep events."
+},
+
+{
+category:"Discharge Planning",
+question:"What discharge support is required?",
+answer:"Formal breastfeeding evaluation, feeding plan, community referrals, lactation resources and follow-up recommendations."
+},
+
+{
+category:"Discharge Planning",
+question:"What should occur if an infant is not feeding well at discharge?",
+answer:"An individualized written feeding plan and close follow-up should be arranged."
+}
+
+];let current = 0;
+
+const question =
+document.getElementById("question");
+
+const answer =
+document.getElementById("answer");
+
+const category =
+document.getElementById("category");
+
+const progress =
+document.getElementById("progress");
+
+const stats =
+document.getElementById("stats");
+
+const flashcard =
+document.getElementById("flashcard");
+
+function renderCard(){
+
+const card =
+cards[current];
+
+question.textContent =
+card.question;
+
+answer.textContent =
+card.answer;
+
+category.textContent =
+card.category;
+
+stats.textContent =
+`Card ${current+1} of ${cards.length}`;
+
+progress.style.width =
+`${((current+1)/cards.length)*100}%`;
+
+flashcard.classList.remove("flipped");
+}
+
+function nextCard(){
+if(current < cards.length-1){
+current++;
+renderCard();
+}
+}
+
+function prevCard(){
+if(current > 0){
+current--;
+renderCard();
+}
+}
+
+function flipCard(){
+flashcard.classList.toggle("flipped");
+}
+
+function shuffleCards(){
+
+for(let i=cards.length-1;i>0;i--){
+
+const j =
+Math.floor(Math.random()*(i+1));
+
+[cards[i],cards[j]] =
+[cards[j],cards[i]];
+}
+
+current=0;
+
+renderCard();
+}
+
+function restartCards(){
+
+current=0;
+
+renderCard();
+}
+
+document.getElementById("nextBtn")
+.addEventListener("click",nextCard);
+
+document.getElementById("prevBtn")
+.addEventListener("click",prevCard);
+
+document.getElementById("flipBtn")
+.addEventListener("click",flipCard);
+
+document.getElementById("shuffleBtn")
+.addEventListener("click",shuffleCards);
+
+document.getElementById("restartBtn")
+.addEventListener("click",restartCards);
+
+flashcard.addEventListener("click",flipCard);
+
+document.addEventListener(
+"keydown",
+e=>{
+
+if(e.code==="Space"){
+e.preventDefault();
+flipCard();
+}
+
+if(e.key==="ArrowRight"){
+nextCard();
+}
+
+if(e.key==="ArrowLeft"){
+prevCard();
+}
+});
+
+renderCard();
+
+</script>
+
+</body>
+</html>
+Add Baby-Friendly Provider Review flashcards
